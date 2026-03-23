@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NAVS - Sistema de Gestión de Reembolsos Médicos
 
-## Getting Started
+Aplicación web full-stack para gestionar reembolsos médicos y farmacéuticos. Permite a los usuarios enviar solicitudes con documentos adjuntos y a los administradores revisarlas y aprobarlas.
 
-First, run the development server:
+## Tecnologías
+
+- **Frontend**: Next.js 14 (App Router) + TypeScript + Tailwind CSS
+- **Backend**: Supabase (Auth + PostgreSQL + Storage)
+- **UI**: Lucide React (iconos)
+
+## Funcionalidades
+
+### Módulo de Usuario
+- Registro e inicio de sesión
+- Dashboard con estadísticas personales
+- Crear solicitudes de reembolso con documentos adjuntos (PDF/imágenes)
+- Cálculo automático de cobertura según tipo de servicio
+- Ver historial y estado de solicitudes
+
+### Módulo de Administrador
+- Panel con estadísticas globales
+- Listado de todas las solicitudes
+- Revisar documentos adjuntos
+- Cambiar estado (Pendiente / En Revisión / Aprobado / Rechazado)
+- Agregar notas visibles para el usuario
+
+### Porcentajes de Cobertura
+| Tipo de Servicio | Cobertura |
+|---|---|
+| Consulta Médica | 80% |
+| Farmacéutico | 70% |
+| Exámenes de Laboratorio | 90% |
+| Hospitalización | 85% |
+| Dental | 60% |
+| Otro | 50% |
+
+## Configuración
+
+### 1. Crear proyecto en Supabase
+
+1. Ve a [supabase.com](https://supabase.com) y crea un proyecto nuevo
+2. En **Settings > API**, copia el `URL` y la `anon key`
+
+### 2. Configurar variables de entorno
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.local.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Edita `.env.local` con tus valores de Supabase:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=tu-anon-key
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Ejecutar migración de base de datos
 
-## Learn More
+En el **SQL Editor** de Supabase, ejecuta el contenido del archivo:
 
-To learn more about Next.js, take a look at the following resources:
+```
+supabase/migrations/001_initial_schema.sql
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Esto crea las tablas, políticas de seguridad y el bucket de almacenamiento.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Crear un usuario administrador
 
-## Deploy on Vercel
+Después de registrar tu primer usuario, ejecuta en el SQL Editor:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```sql
+UPDATE public.profiles
+SET role = 'admin'
+WHERE email = 'tu-email@ejemplo.com';
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 5. Instalar y ejecutar
+
+```bash
+npm install
+npm run dev
+```
+
+Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+
+## Estructura del Proyecto
+
+```
+src/
+├── app/
+│   ├── auth/          # Login y registro
+│   ├── dashboard/     # Panel del usuario
+│   ├── admin/         # Panel del administrador
+│   └── page.tsx       # Landing page
+├── components/        # Componentes reutilizables
+└── lib/
+    ├── supabase/      # Clientes Supabase (browser/server)
+    ├── types.ts       # Tipos TypeScript
+    └── coverage.ts    # Lógica de cálculo de cobertura
+```
