@@ -61,7 +61,7 @@ export default async function DashboardPage() {
             <div>
               <p className="text-xs text-gray-500">Total Cubierto</p>
               <p className="text-lg font-bold text-gray-900">
-                ${totalAmount.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                ${totalAmount.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
               </p>
             </div>
           </div>
@@ -159,7 +159,7 @@ export default async function DashboardPage() {
                 {allRequests.map((req) => (
                   <tr key={req.id} className="hover:bg-gray-50 transition">
                     <td className="px-6 py-4 text-sm text-gray-700">
-                      {new Date(req.service_date).toLocaleDateString('es-MX')}
+                      {new Date(req.service_date).toLocaleDateString('es-CL')}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-700">
                       {REIMBURSEMENT_TYPE_LABELS[req.type as ReimbursementType]}
@@ -168,10 +168,10 @@ export default async function DashboardPage() {
                       {req.provider_name}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-700 text-right font-mono">
-                      ${Number(req.amount).toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                      ${Number(req.amount).toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                     </td>
                     <td className="px-6 py-4 text-sm text-green-700 text-right font-mono font-medium">
-                      ${Number(req.covered_amount).toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                      ${Number(req.covered_amount).toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                     </td>
                     <td className="px-6 py-4 text-center">
                       <StatusBadge status={req.status as RequestStatus} />

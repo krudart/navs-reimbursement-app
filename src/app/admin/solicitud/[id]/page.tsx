@@ -57,7 +57,7 @@ export default async function AdminRequestDetailPage({
           <h1 className="text-2xl font-bold text-gray-900">Revisar Solicitud</h1>
           <p className="text-gray-500 text-sm mt-1">
             Creada el{' '}
-            {new Date(request.created_at).toLocaleDateString('es-MX', {
+            {new Date(request.created_at).toLocaleDateString('es-CL', {
               year: 'numeric',
               month: 'long',
               day: 'numeric',
@@ -102,7 +102,7 @@ export default async function AdminRequestDetailPage({
             <div>
               <p className="text-xs text-gray-500">Fecha del Servicio</p>
               <p className="text-sm font-medium text-gray-900">
-                {new Date(request.service_date).toLocaleDateString('es-MX')}
+                {new Date(request.service_date).toLocaleDateString('es-CL')}
               </p>
             </div>
           </div>
@@ -122,7 +122,7 @@ export default async function AdminRequestDetailPage({
             <div>
               <p className="text-xs text-gray-500">Monto Total</p>
               <p className="text-sm font-medium text-gray-900">
-                ${Number(request.amount).toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                ${Number(request.amount).toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
               </p>
             </div>
           </div>
@@ -141,7 +141,7 @@ export default async function AdminRequestDetailPage({
           <div>
             <p className="text-xs text-indigo-600 mb-1">Monto Total</p>
             <p className="text-lg font-bold text-gray-900">
-              ${Number(request.amount).toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+              ${Number(request.amount).toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
             </p>
           </div>
           <div>
@@ -149,13 +149,13 @@ export default async function AdminRequestDetailPage({
               Cubierto ({request.coverage_percentage}%)
             </p>
             <p className="text-lg font-bold text-green-700">
-              ${Number(request.covered_amount).toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+              ${Number(request.covered_amount).toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
             </p>
           </div>
           <div>
             <p className="text-xs text-indigo-600 mb-1">Pago del Usuario</p>
             <p className="text-lg font-bold text-gray-700">
-              ${(Number(request.amount) - Number(request.covered_amount)).toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+              ${(Number(request.amount) - Number(request.covered_amount)).toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
             </p>
           </div>
         </div>

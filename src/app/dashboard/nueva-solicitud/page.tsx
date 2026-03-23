@@ -86,7 +86,9 @@ export default function NewRequestPage() {
       router.push('/dashboard');
       router.refresh();
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Error al crear la solicitud';
+      console.error('Error creating request:', err);
+      const supaErr = err as { message?: string; statusCode?: string; code?: string };
+      const message = supaErr?.message || (err instanceof Error ? err.message : 'Error al crear la solicitud');
       setError(message);
       setLoading(false);
     }
@@ -162,7 +164,7 @@ export default function NewRequestPage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Monto Total (MXN)
+                Monto Total
               </label>
               <input
                 type="number"
@@ -203,7 +205,7 @@ export default function NewRequestPage() {
               <div>
                 <p className="text-xs text-indigo-600 mb-1">Monto Total</p>
                 <p className="text-lg font-bold text-gray-900">
-                  ${numericAmount.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                  ${numericAmount.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                 </p>
               </div>
               <div>
@@ -211,13 +213,13 @@ export default function NewRequestPage() {
                   Cobertura ({coverage.percentage}%)
                 </p>
                 <p className="text-lg font-bold text-green-700">
-                  ${coverage.coveredAmount.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                  ${coverage.coveredAmount.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                 </p>
               </div>
               <div>
                 <p className="text-xs text-indigo-600 mb-1">Tu Pago</p>
                 <p className="text-lg font-bold text-gray-700">
-                  ${coverage.outOfPocket.toLocaleString('es-MX', { minimumFractionDigits: 2 })}
+                  ${coverage.outOfPocket.toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                 </p>
               </div>
             </div>

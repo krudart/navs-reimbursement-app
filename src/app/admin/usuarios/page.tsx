@@ -83,7 +83,7 @@ export default async function AdminUsersPage() {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-600">
-                      {new Date(profile.created_at).toLocaleDateString('es-MX')}
+                      {new Date(profile.created_at).toLocaleDateString('es-CL')}
                     </td>
                   </tr>
                 ))}
